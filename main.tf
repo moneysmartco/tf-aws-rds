@@ -116,6 +116,8 @@ resource "aws_db_instance" "rds_master_multi_az" {
   auto_minor_version_upgrade  = true
   skip_final_snapshot         = true
   final_snapshot_identifier   = "${var.rds_instance_name}-final-snapshot"
+  monitoring_interval         = "${var.rds_monitoring_interval}"
+  monitoring_role_arn         = "${var.rds_monitoring_role_arn}"
   tags {
     Name        = "${var.rds_instance_name}",
     Project     = "${var.project_name}",

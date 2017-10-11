@@ -59,3 +59,7 @@ variable "rds_monitoring_interval"              {
 }
 
 variable "rds_monitoring_role_arn"              {}
+
+variable "copy_tags_to_snapshot"                {
+  default = true
+}

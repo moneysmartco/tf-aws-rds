@@ -11,6 +11,7 @@ resource "aws_db_subnet_group" "rds_private_subnet" {
 }
 
 resource "aws_db_subnet_group" "rds_public_subnet" {
+  count       = "${public_subnet_ids} == "" ? 0 : 1"
   name        = "${var.rds_instance_name}-public-subnet"
   description = "${var.rds_instance_name} RDS Public Subnet"
   subnet_ids  = ["${split(",", var.public_subnet_ids)}"]

@@ -54,7 +54,9 @@ variable "rds_ports"                            {
   }
 }
 
-variable "app_sg_ids"                           {}
+variable "app_sg_ids"                           {
+  default = ""
+}
 
 variable "rds_monitoring_interval"              {
   default = 30

@@ -91,6 +91,7 @@ resource "aws_db_instance" "rds_master" {
   monitoring_interval         = "${var.rds_monitoring_interval}"
   monitoring_role_arn         = "${var.rds_monitoring_role_arn}"
   copy_tags_to_snapshot       = "${var.copy_tags_to_snapshot}"
+  snapshot_identifier         = "${var.snapshot_identifier}"
   tags {
     Name        = "${var.rds_instance_name}",
     Project     = "${var.project_name}",
@@ -124,6 +125,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   monitoring_interval         = "${var.rds_monitoring_interval}"
   monitoring_role_arn         = "${var.rds_monitoring_role_arn}"
   copy_tags_to_snapshot       = "${var.copy_tags_to_snapshot}"
+  snapshot_identifier         = "${var.snapshot_identifier}"
   tags {
     Name        = "${var.rds_instance_name}",
     Project     = "${var.project_name}",

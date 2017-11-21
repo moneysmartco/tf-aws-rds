@@ -67,3 +67,7 @@ variable "rds_monitoring_role_arn"              {}
 variable "copy_tags_to_snapshot"                {
   default = true
 }
+
+variable "snapshot_identifier" {
+  default = 0
+}

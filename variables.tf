@@ -66,5 +66,5 @@ variable "copy_tags_to_snapshot"                {
 }
 
 variable "snapshot_identifier" {
-  default = 0
+  default = ""
 }

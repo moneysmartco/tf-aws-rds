@@ -10,16 +10,6 @@ resource "aws_db_subnet_group" "rds_private_subnet" {
   }
 }
 
-resource "aws_db_subnet_group" "rds_public_subnet" {
-  count       = "${var.public_subnet_ids == "" ? 0 : 1}"
-  name        = "${var.rds_instance_name}-public-subnet"
-  description = "${var.rds_instance_name} RDS Public Subnet"
-  subnet_ids  = ["${split(",", var.public_subnet_ids)}"]
-  tags {
-    Name = "${var.rds_instance_name}-public-subnet"
-  }
-}
-
 #--------------------
 # Params group
 #--------------------

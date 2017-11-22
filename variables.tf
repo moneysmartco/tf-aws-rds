@@ -1,9 +1,6 @@
 variable "env"                                  {}
 variable "azs"                                  {}
 variable "vpc_id"                               {}
-variable "public_subnet_ids"                    {
-  default = ""
-}
 variable "private_subnet_ids"                   {}
 variable "project_name"                         {}
 

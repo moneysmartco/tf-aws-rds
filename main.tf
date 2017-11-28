@@ -2,9 +2,15 @@
 # Subnet Groups
 #--------------------
 resource "aws_db_subnet_group" "rds_private_subnet" {
+  count       = "${var.private_subnet_ids == "" ? 0 : 1}"
   name        = "${var.rds_instance_name}-private-subnet"
   description = "${var.rds_instance_name} RDS Private Subnet"
   subnet_ids  = ["${split(",", var.private_subnet_ids)}"]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags {
     Name = "${var.rds_instance_name}-private-subnet"
   }
@@ -15,6 +21,11 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
   name        = "${var.rds_instance_name}-public-subnet"
   description = "${var.rds_instance_name} RDS Public Subnet"
   subnet_ids  = ["${split(",", var.public_subnet_ids)}"]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags {
     Name = "${var.rds_instance_name}-public-subnet"
   }
@@ -26,6 +37,10 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
 resource "aws_db_parameter_group" "rds_params" {
   name = "${var.rds_instance_name}-params"
   family = "${var.rds_engine_version}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   ## Need to handle a default params here for mysql, postgresl, etc
 }
@@ -47,6 +62,10 @@ resource "aws_security_group" "rds_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags {
     Name = "${var.rds_instance_name}-${var.rds_engine_name}-rds-sg"
   }
@@ -60,6 +79,10 @@ resource "aws_security_group_rule" "allow_connect_from_app" {
   protocol        = "tcp"
   security_group_id         = "${aws_security_group.rds_sg.id}"
   source_security_group_id  = ["${split(",", var.app_sg_ids)}"]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 
@@ -92,6 +115,11 @@ resource "aws_db_instance" "rds_master" {
   monitoring_role_arn         = "${var.rds_monitoring_role_arn}"
   copy_tags_to_snapshot       = "${var.copy_tags_to_snapshot}"
   snapshot_identifier         = "${var.snapshot_identifier}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags {
     Name        = "${var.rds_instance_name}",
     Project     = "${var.project_name}",
@@ -126,6 +154,12 @@ resource "aws_db_instance" "rds_master_multi_az" {
   monitoring_role_arn         = "${var.rds_monitoring_role_arn}"
   copy_tags_to_snapshot       = "${var.copy_tags_to_snapshot}"
   snapshot_identifier         = "${var.snapshot_identifier}"
+
+  lifecycle {
+    create_before_destroy = true
+    prevent_destroy       = true
+  }
+
   tags {
     Name        = "${var.rds_instance_name}",
     Project     = "${var.project_name}",

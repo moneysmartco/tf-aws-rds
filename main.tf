@@ -116,6 +116,9 @@ resource "aws_db_instance" "rds_master" {
   copy_tags_to_snapshot       = "${var.copy_tags_to_snapshot}"
   snapshot_identifier         = "${var.snapshot_identifier}"
 
+  # Build a read replica from another RDS
+  replicate_source_db         = "${var.rds_master_id}"
+
   lifecycle {
     create_before_destroy = true
   }
@@ -154,6 +157,9 @@ resource "aws_db_instance" "rds_master_multi_az" {
   monitoring_role_arn         = "${var.rds_monitoring_role_arn}"
   copy_tags_to_snapshot       = "${var.copy_tags_to_snapshot}"
   snapshot_identifier         = "${var.snapshot_identifier}"
+
+  # Build a read replica from another RDS
+  replicate_source_db         = "${var.rds_master_id}"
 
   lifecycle {
     create_before_destroy = true

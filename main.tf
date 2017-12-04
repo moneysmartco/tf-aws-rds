@@ -100,14 +100,14 @@ resource "aws_db_instance" "rds_master" {
   name                        = "${var.rds_instance_db_name}"
   username                    = "${var.rds_instance_root_user_name}"
   password                    = "${var.rds_instance_root_user_password}"
-  db_subnet_group_name        = "${aws_db_subnet_group.rds_private_subnet.name}"
+  db_subnet_group_name        = "${var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet.name : ""}"
   parameter_group_name        = "${aws_db_parameter_group.rds_params.name}"
   availability_zone           = "${element(split(",", var.azs), 0)}"
   multi_az                    = false
   publicly_accessible         = "${var.rds_publicly_accessible}"
   vpc_security_group_ids      = ["${aws_security_group.rds_sg.id}"]
   apply_immediately           = true
-  backup_retention_period     = "${var.rds_backup_retention_period}"
+  backup_retention_period     = "${var.rds_master_id == "" ? var.rds_backup_retention_period : 0}"
   auto_minor_version_upgrade  = true
   skip_final_snapshot         = true
   final_snapshot_identifier   = "${var.rds_instance_name}-final-snapshot"
@@ -143,13 +143,13 @@ resource "aws_db_instance" "rds_master_multi_az" {
   name                        = "${var.rds_instance_db_name}"
   username                    = "${var.rds_instance_root_user_name}"
   password                    = "${var.rds_instance_root_user_password}"
-  db_subnet_group_name        = "${aws_db_subnet_group.rds_private_subnet.name}"
+  db_subnet_group_name        = "${var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet.name : ""}"
   parameter_group_name        = "${aws_db_parameter_group.rds_params.name}"
   multi_az                    = "${var.rds_multi_az}"
   publicly_accessible         = "${var.rds_publicly_accessible}"
   vpc_security_group_ids      = ["${aws_security_group.rds_sg.id}"]
   apply_immediately           = true
-  backup_retention_period     = "${var.rds_backup_retention_period}"
+  backup_retention_period     = "${var.rds_master_id == "" ? var.rds_backup_retention_period : 0}"
   auto_minor_version_upgrade  = true
   skip_final_snapshot         = true
   final_snapshot_identifier   = "${var.rds_instance_name}-final-snapshot"

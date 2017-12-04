@@ -70,4 +70,4 @@ module "pg_replica" {
 }
 ```
 
-If you create the read replica then you have to run terraform apply twice - dou to the limit of AWS API (Just like when you create replica manually you will have to modify the replica RDS to set a different subnet or security group after you create it)
+If you create the read replica then you have to run terraform apply twice - because the limit of AWS API (Just like when you create replica manually you will have to modify the replica RDS to set a different subnet or security group after you create it)

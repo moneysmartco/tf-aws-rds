@@ -72,13 +72,13 @@ resource "aws_security_group" "rds_sg" {
 }
 
 resource "aws_security_group_rule" "allow_connect_from_app" {
-  count           = "${var.app_sg_ids == "" ? 0 : 1}"
+  count           = "${length(split(",", var.app_sg_ids))}"
   type            = "ingress"
   from_port       = "${lookup(var.rds_ports, var.rds_engine_name)}"
   to_port         = "${lookup(var.rds_ports, var.rds_engine_name)}"
   protocol        = "tcp"
   security_group_id         = "${aws_security_group.rds_sg.id}"
-  source_security_group_id  = ["${split(",", var.app_sg_ids)}"]
+  source_security_group_id  = "${element(split(",", var.app_sg_ids), count.index)}"
 
   lifecycle {
     create_before_destroy = true

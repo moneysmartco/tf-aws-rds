@@ -19,7 +19,7 @@ multi_az              = "${var.rds_multi_az}"
 Create a master RDS node
 
 ```
-module "pg_replica" {
+module "pg_master" {
   source = "git@github.com:moneysmartco/tf-aws-rds.git?ref=replica-setup"
   env                             = "${var.env}"
   azs                             = "${var.azs}"
@@ -38,6 +38,7 @@ module "pg_replica" {
   rds_monitoring_role_arn         = "${var.rds_monitoring_role_arn}"
   rds_multi_az                    = "${var.rds_multi_az}"
   app_sg_ids                      = "${module.ms_sg.app_sg_id}"
+  rds_skip_final_snapshot         = "${var.rds_skip_final_snapshot}"
 }
 ```
 

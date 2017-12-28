@@ -109,7 +109,7 @@ resource "aws_db_instance" "rds_master" {
   apply_immediately           = true
   backup_retention_period     = "${var.rds_master_id == "" ? var.rds_backup_retention_period : 0}"
   auto_minor_version_upgrade  = true
-  skip_final_snapshot         = true
+  skip_final_snapshot         = "${var.rds_skip_final_snapshot}"
   final_snapshot_identifier   = "${var.rds_instance_name}-final-snapshot"
   monitoring_interval         = "${var.rds_monitoring_interval}"
   monitoring_role_arn         = "${var.rds_monitoring_role_arn}"
@@ -151,7 +151,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   apply_immediately           = true
   backup_retention_period     = "${var.rds_master_id == "" ? var.rds_backup_retention_period : 0}"
   auto_minor_version_upgrade  = true
-  skip_final_snapshot         = true
+  skip_final_snapshot         = "${var.rds_skip_final_snapshot}"
   final_snapshot_identifier   = "${var.rds_instance_name}-final-snapshot"
   monitoring_interval         = "${var.rds_monitoring_interval}"
   monitoring_role_arn         = "${var.rds_monitoring_role_arn}"

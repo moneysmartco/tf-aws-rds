@@ -76,3 +76,8 @@ variable "rds_master_id" {
   description = "Create a read replica from this RDS master id"
   default     = ""
 }
+
+variable "rds_skip_final_snapshot" {
+  description = "Determines whether a final DB snapshot is created before the DB instance is deleted."
+  default     = true
+}

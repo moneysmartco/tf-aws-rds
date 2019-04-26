@@ -1,8 +1,16 @@
 locals {
   # env tag in map structure
   env_tag = { Environment = "${var.env}" }
+  
   # rds instance name tag in map structure
   rds_instance_name_tag = { Name = "${var.rds_instance_name}" }
+  
+  # rds security group name tag in map structure
+  rds_security_group_name_tag = { Name = "${var.rds_instance_name}-${var.rds_engine_name}-rds-sg" }
+  
+  # rds subnet group name tag in map structure
+  rds_private_subnet_group_name_tag = { Name = "${var.rds_instance_name}-private-subnet" }
+  rds_public_subnet_group_name_tag = { Name = "${var.rds_instance_name}-public-subnet" }
 
   #------------------------------------------------------------
   # variables that will be mapped to the various resource block
@@ -10,6 +18,16 @@ locals {
 
   # rds instance tags
   aws_db_instance_tags = "${merge(var.tags, local.env_tag, local.rds_instance_name_tag)}"
+
+  # rds security group name tags
+  aws_security_group_tags = "${merge(var.tags, local.env_tag, local.rds_security_group_name_tag)}"
+
+  # rds private subnet group name tags
+  private_subnet_group_tags = "${merge(var.tags, local.env_tag, local.rds_private_subnet_group_name_tag)}"
+
+  # rds private subnet group name tags
+  public_subnet_group_tags = "${merge(var.tags, local.env_tag, local.rds_public_subnet_group_name_tag)}"
+
 }
 
 #--------------------
@@ -25,9 +43,7 @@ resource "aws_db_subnet_group" "rds_private_subnet" {
     create_before_destroy = true
   }
 
-  tags {
-    Name = "${var.rds_instance_name}-private-subnet"
-  }
+  tags = "${local.private_subnet_group_tags}"
 }
 
 resource "aws_db_subnet_group" "rds_public_subnet" {
@@ -40,9 +56,7 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
     create_before_destroy = true
   }
 
-  tags {
-    Name = "${var.rds_instance_name}-public-subnet"
-  }
+  tags = "${local.public_subnet_group_tags}"
 }
 
 #--------------------
@@ -79,9 +93,7 @@ resource "aws_security_group" "rds_sg" {
     create_before_destroy = true
   }
 
-  tags {
-    Name = "${var.rds_instance_name}-${var.rds_engine_name}-rds-sg"
-  }
+  tags = "${local.aws_security_group_tags}"
 }
 
 resource "aws_security_group_rule" "allow_connect_from_app" {

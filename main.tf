@@ -135,14 +135,6 @@ resource "aws_db_instance" "rds_master" {
     create_before_destroy = true
   }
 
-#  tags {
-#    Name        = "${var.rds_instance_name}"
-#    Project     = "${var.project_name}"
-#    Type        = "rds"
-#    Layer       = "rds"
-#    Environment = "${var.env}"
-#  }
-
   tags = "${local.aws_db_instance_tags}"
 }
 
@@ -179,14 +171,6 @@ resource "aws_db_instance" "rds_master_multi_az" {
     create_before_destroy = true
     prevent_destroy       = true
   }
-
-#  tags {
-#    Name        = "${var.rds_instance_name}"
-#    Project     = "${var.project_name}"
-#    Type        = "rds"
-#    Layer       = "rds"
-#    Environment = "${var.env}"
-#  }
 
   tags = "${local.aws_db_instance_tags}"
 }

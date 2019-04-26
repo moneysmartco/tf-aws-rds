@@ -85,6 +85,7 @@ variable "rds_skip_final_snapshot" {
 variable "tags" {
   description = "Tagging resources with default values"
   default = {
+    "Name" = ""
     "Country" = ""
     "Environment" = ""
     "Repository" = ""

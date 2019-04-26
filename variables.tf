@@ -81,3 +81,18 @@ variable "rds_skip_final_snapshot" {
   description = "Determines whether a final DB snapshot is created before the DB instance is deleted."
   default     = true
 }
+
+variable "tags" {
+  description = "Tagging resources with default values"
+  default = {
+    "Country" = ""
+    "Environment" = ""
+    "Repository" = ""
+    "Owner" = ""
+    "Department" = ""
+    "Team" = "shared"
+    "Product" = "common"
+    "Project" = "common"
+    "Stack" = ""
+  }
+}

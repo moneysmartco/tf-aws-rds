@@ -1,3 +1,17 @@
+locals {
+  # env tag in map structure
+  env_tag = { Environment = "${var.env}" }
+  # rds instance name tag in map structure
+  rds_instance_name_tag = { Name = "${var.rds_instance_name}" }
+
+  #------------------------------------------------------------
+  # variables that will be mapped to the various resource block
+  #------------------------------------------------------------
+
+  # rds instance tags
+  aws_db_instance_tags = "${merge(var.tags, local.env_tag, local.rds_instance_name_tag)}"
+}
+
 #--------------------
 # Subnet Groups
 #--------------------
@@ -121,13 +135,15 @@ resource "aws_db_instance" "rds_master" {
     create_before_destroy = true
   }
 
-  tags {
-    Name        = "${var.rds_instance_name}"
-    Project     = "${var.project_name}"
-    Type        = "rds"
-    Layer       = "rds"
-    Environment = "${var.env}"
-  }
+#  tags {
+#    Name        = "${var.rds_instance_name}"
+#    Project     = "${var.project_name}"
+#    Type        = "rds"
+#    Layer       = "rds"
+#    Environment = "${var.env}"
+#  }
+
+  tags = "${local.aws_db_instance_tags}"
 }
 
 resource "aws_db_instance" "rds_master_multi_az" {
@@ -164,11 +180,13 @@ resource "aws_db_instance" "rds_master_multi_az" {
     prevent_destroy       = true
   }
 
-  tags {
-    Name        = "${var.rds_instance_name}"
-    Project     = "${var.project_name}"
-    Type        = "rds"
-    Layer       = "rds"
-    Environment = "${var.env}"
-  }
+#  tags {
+#    Name        = "${var.rds_instance_name}"
+#    Project     = "${var.project_name}"
+#    Type        = "rds"
+#    Layer       = "rds"
+#    Environment = "${var.env}"
+#  }
+
+  tags = "${local.aws_db_instance_tags}"
 }

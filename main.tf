@@ -25,7 +25,7 @@ locals {
   # rds private subnet group name tags
   private_subnet_group_tags = "${merge(var.tags, local.env_tag, local.rds_private_subnet_group_name_tag)}"
 
-  # rds private subnet group name tags
+  # rds public subnet group name tags
   public_subnet_group_tags = "${merge(var.tags, local.env_tag, local.rds_public_subnet_group_name_tag)}"
 
 }

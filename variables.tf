@@ -23,6 +23,10 @@ variable "rds_storage_size"                     {
   default = 50
 }
 
+variable "rds_storage_encrypted"                {
+  default = false
+}
+
 variable "rds_instance_name"                    {}
 variable "rds_instance_type"                    {
   default = "db.t2.micro"

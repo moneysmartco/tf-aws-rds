@@ -23,13 +23,12 @@ variable "rds_storage_size"                     {
   default = 50
 }
 # maximum storage allocation for autoscaling is 1000gib
-variable "rds_max_storage_size"                 {
-  default = 50
-}
+variable "rds_max_storage_size"                 {}
 variable "rds_storage_encrypted"                {
   default = false
 }
 variable "rds_instance_name"                    {}
+# DB Instance class db.t2.micro does not support encryption at rest
 variable "rds_instance_type"                    {
   default = "db.t2.micro"
 }

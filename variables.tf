@@ -23,7 +23,9 @@ variable "rds_storage_size"                     {
   default = 50
 }
 # maximum storage allocation for autoscaling is 1000gib
-variable "rds_max_storage_size"                 {}
+variable "rds_max_storage_size"                 {
+  default = 100 
+}
 variable "rds_storage_encrypted"                {
   default = false
 }

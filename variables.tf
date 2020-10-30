@@ -9,6 +9,11 @@ variable "project_name"                         {}
 variable "rds_engine_name"                      {
   default = "mysql"
 }
+
+variable "deletion_protection"                  {
+  default = "true"
+}
+
 variable "rds_engine_version"                   {
   default = "mysql5.6"
 }

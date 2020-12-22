@@ -57,7 +57,7 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
   }
   parameter {
     name = "max_connections"
-    value = "100"
+    value = 100
     # apply_method = "pending-reboot"
   }
 

@@ -55,6 +55,11 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
   lifecycle {
     create_before_destroy = true
   }
+  parameter {
+    name = "max_connections"
+    value = "250"
+    # apply_method = "pending-reboot"
+  }
 
   tags = "${local.public_subnet_group_tags}"
 }

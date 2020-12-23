@@ -55,11 +55,7 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
   lifecycle {
     create_before_destroy = true
   }
-  parameter {
-    name = "max_connections"
-    value = 100
-    apply_method = "pending-reboot"
-  }
+  
 
   tags = "${local.public_subnet_group_tags}"
 }
@@ -73,6 +69,11 @@ resource "aws_db_parameter_group" "rds_params" {
 
   lifecycle {
     create_before_destroy = true
+  }
+  parameter {
+    name = "max_connections"
+    value = 100
+    # apply_method = "pending-reboot"
   }
 
   ## Need to handle a default params here for mysql, postgresl, etc

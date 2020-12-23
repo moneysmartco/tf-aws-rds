@@ -63,7 +63,7 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
 # Params group
 #--------------------
 resource "aws_db_parameter_group" "rds_params_with_max_connections" {
-  count = "${var.max_connections != ""  ? 1 : 0}"
+  # count = "${var.max_connections != ""  ? 1 : 0}"
   name   = "${var.rds_instance_name}-params"
   family = "${var.rds_engine_version}"
 
@@ -80,7 +80,7 @@ resource "aws_db_parameter_group" "rds_params_with_max_connections" {
 }
 
 resource "aws_db_parameter_group" "rds_params_without_max_connections" {
-  count = "${var.max_connections != ""  ? 0 : 1}"
+  # count = "${var.max_connections != ""  ? 0 : 1}"
   name   = "${var.rds_instance_name}-params"
   family = "${var.rds_engine_version}"
 

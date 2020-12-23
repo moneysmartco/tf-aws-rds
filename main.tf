@@ -62,7 +62,25 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
 #--------------------
 # Params group
 #--------------------
-resource "aws_db_parameter_group" "rds_params" {
+resource "aws_db_parameter_group" "rds_params_with_max_connections" {
+  # count = "${var.max_connections != ""  ? 1 : 0}"
+  name   = "${var.rds_instance_name}-params"
+  family = "${var.rds_engine_version}"
+
+  lifecycle {
+    create_before_destroy = true
+  }
+  parameter {
+    name = "max_connections"
+    value = "${var.max_connections}"
+    apply_method = "pending-reboot"
+  }
+
+  ## Need to handle a default params here for mysql, postgresl, etc
+}
+
+resource "aws_db_parameter_group" "rds_params_without_max_connections" {
+  # count = "${var.max_connections != ""  ? 0 : 1}"
   name   = "${var.rds_instance_name}-params"
   family = "${var.rds_engine_version}"
 
@@ -127,7 +145,7 @@ resource "aws_db_instance" "rds_master" {
   username                   = "${var.rds_instance_root_user_name}"
   password                   = "${var.rds_instance_root_user_password}"
   db_subnet_group_name       = "${var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet.name : ""}"
-  parameter_group_name       = "${aws_db_parameter_group.rds_params.name}"
+  parameter_group_name       = "${var.max_connections != ""  ? aws_db_parameter_group.rds_params_with_max_connections.name : aws_db_parameter_group.rds_params_without_max_connections.name }"
   availability_zone          = "${element(split(",", var.azs), 0)}"
   multi_az                   = false
   publicly_accessible        = "${var.rds_publicly_accessible}"
@@ -167,7 +185,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   username                   = "${var.rds_instance_root_user_name}"
   password                   = "${var.rds_instance_root_user_password}"
   db_subnet_group_name       = "${var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet.name : ""}"
-  parameter_group_name       = "${aws_db_parameter_group.rds_params.name}"
+  parameter_group_name       = "${var.max_connections != ""  ? aws_db_parameter_group.rds_params_with_max_connections.name : aws_db_parameter_group.rds_params_without_max_connections.name }"
   multi_az                   = "${var.rds_multi_az}"
   publicly_accessible        = "${var.rds_publicly_accessible}"
   vpc_security_group_ids     = ["${aws_security_group.rds_sg.id}"]

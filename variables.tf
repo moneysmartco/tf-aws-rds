@@ -84,6 +84,11 @@ variable "rds_skip_final_snapshot" {
   description = "Determines whether a final DB snapshot is created before the DB instance is deleted."
   default     = true
 }
+
+variable "max_connections" {
+  description = "max connections for db"
+  default = ""
+}
 variable "tags" {
   description = "Tagging resources with default values"
   default = {
@@ -99,3 +104,4 @@ variable "tags" {
     "Stack" = ""
   }
 }
+

@@ -70,7 +70,7 @@ resource "aws_db_parameter_group" "rds_params" {
     create_before_destroy = true
   }
   parameter {
-    count = "${var.max_connections ? 1 : 0}"
+    count = "${var.max_connections != ""  ? 1 : 0}"
     name = "max_connections"
     value = "${var.max_connections}"
     apply_method = "pending-reboot"

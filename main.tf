@@ -72,7 +72,7 @@ resource "aws_db_parameter_group" "rds_params" {
   }
   parameter {
     name = "max_connections"
-    value = 100
+    value = "${var.max_connections}"
     # apply_method = "pending-reboot"
   }
 

@@ -106,9 +106,9 @@ variable "copy_tags_to_snapshot" {
   default = true
 }
 
-# variable "snapshot_identifier" {
-#   default = ""
-# }
+ variable "snapshot_identifier" {
+   default = ""
+ }
 
 variable "rds_master_id" {
   description = "Create a read replica from this RDS master id"

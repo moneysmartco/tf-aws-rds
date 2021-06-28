@@ -80,6 +80,7 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
 # Params group
 #--------------------
 resource "aws_db_parameter_group" "rds_params" {
+  count  = length(var.custom_parameter_name) != 0 ? 0 : 1
   name   = "${var.rds_instance_name}-params"
   family = var.rds_engine_version
 

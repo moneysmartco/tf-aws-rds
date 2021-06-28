@@ -143,7 +143,7 @@ resource "aws_db_instance" "rds_master" {
   username                   = var.rds_instance_root_user_name
   password                   = var.rds_instance_root_user_password
   db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""
-  parameter_group_name       = aws_db_parameter_group.rds_params.name
+  parameter_group_name       = length(var.custom_parameter_name) != 0 ? var.custom_parameter_name : aws_db_parameter_group.rds_params.name
   availability_zone          = element(split(",", var.azs), 0)
   multi_az                   = false
   publicly_accessible        = var.rds_publicly_accessible
@@ -184,7 +184,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   username                   = var.rds_instance_root_user_name
   password                   = var.rds_instance_root_user_password
   db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""
-  parameter_group_name       = aws_db_parameter_group.rds_params.name
+  parameter_group_name       = length(var.custom_parameter_name) != 0 ? var.custom_parameter_name : aws_db_parameter_group.rds_params.name
   multi_az                   = var.rds_multi_az
   publicly_accessible        = var.rds_publicly_accessible
   vpc_security_group_ids     = [aws_security_group.rds_sg.id]

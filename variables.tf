@@ -121,7 +121,7 @@ variable "rds_skip_final_snapshot" {
 }
 
 variable "custom_parameter_name" {
-  type = "string"
+  type = string
   default = null
   
 }

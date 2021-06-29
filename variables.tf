@@ -120,6 +120,12 @@ variable "rds_skip_final_snapshot" {
   default     = true
 }
 
+variable "custom_parameter_group_name" {
+  type = string
+  default = null
+  
+}
+
 variable "tags" {
   description = "Tagging resources with default values"
   default = {

@@ -205,7 +205,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
 
   lifecycle {
     create_before_destroy = true
-    prevent_destroy       = true
+    # prevent_destroy       = true
   }
 
   tags = local.aws_db_instance_tags

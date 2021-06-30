@@ -72,6 +72,7 @@ variable "rds_instance_root_user_password" {
 }
 
 variable "rds_multi_az" {
+  default = false
 }
 
 variable "rds_backup_retention_period" {

@@ -51,7 +51,7 @@ locals {
 # Subnet Groups
 #--------------------
 resource "aws_db_subnet_group" "rds_private_subnet" {
-  count       = var.private_subnet_ids == "" ? 0 : 1
+  # count       = var.private_subnet_ids == "" ? 0 : 1
   name        = "${var.rds_instance_name}-private-subnet"
   description = "${var.rds_instance_name} RDS Private Subnet"
   subnet_ids  = split(",", var.private_subnet_ids)

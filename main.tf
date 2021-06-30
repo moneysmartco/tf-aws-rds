@@ -158,7 +158,7 @@ resource "aws_db_instance" "rds_master" {
   monitoring_role_arn        = var.rds_monitoring_role_arn
   copy_tags_to_snapshot      = var.copy_tags_to_snapshot
   #snapshot_identifier        = var.snapshot_identifier
-  deletion_protection        = var.deletion_protection
+  deletion_protection        = false
   allow_major_version_upgrade = true
 
   # Build a read replica from another RDS
@@ -186,7 +186,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   password                   = var.rds_instance_root_user_password
   db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""
   parameter_group_name       = var.custom_parameter_group_name == null ? aws_db_parameter_group.rds_params[count.index].name : var.custom_parameter_group_name
-  multi_az                   = var.rds_multi_az
+  multi_az                   = true
   publicly_accessible        = var.rds_publicly_accessible
   vpc_security_group_ids     = [aws_security_group.rds_sg.id]
   apply_immediately          = true

@@ -198,14 +198,12 @@ resource "aws_db_instance" "rds_master_multi_az" {
   copy_tags_to_snapshot      = var.copy_tags_to_snapshot
   #snapshot_identifier        = var.snapshot_identifier
   allow_major_version_upgrade = true
+  deletion_protection        = var.deletion_protection
 
   # Build a read replica from another RDS
   replicate_source_db = var.rds_master_id
 
-  lifecycle {
-    create_before_destroy = true
-    prevent_destroy       = true
-  }
+
 
   tags = local.aws_db_instance_tags
 }

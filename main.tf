@@ -80,7 +80,6 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
 # Params group
 #--------------------
 resource "aws_db_parameter_group" "rds_params" {
-  count  = length(var.custom_parameter_group_name) != 0 ? 0 : 1
   name   = "${var.rds_instance_name}-params"
   family = var.rds_engine_version
 
@@ -144,7 +143,7 @@ resource "aws_db_instance" "rds_master" {
   username                   = var.rds_instance_root_user_name
   password                   = var.rds_instance_root_user_password
   db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""
-  parameter_group_name       = length(var.custom_parameter_group_name) != 0 ? var.custom_parameter_group_name : aws_db_parameter_group.rds_params[count.index].name
+  parameter_group_name       = var.custom_parameter_group_name == null ? aws_db_parameter_group.rds_params.name : var.custom_parameter_group_name
   availability_zone          = element(split(",", var.azs), 0)
   multi_az                   = false
   publicly_accessible        = var.rds_publicly_accessible
@@ -185,8 +184,8 @@ resource "aws_db_instance" "rds_master_multi_az" {
   username                   = var.rds_instance_root_user_name
   password                   = var.rds_instance_root_user_password
   db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""
-  parameter_group_name       = length(var.custom_parameter_group_name) != 0 ? var.custom_parameter_group_name : aws_db_parameter_group.rds_params[count.index].name
-  multi_az                   = var.rds_multi_az
+  parameter_group_name       = var.custom_parameter_group_name == null ? aws_db_parameter_group.rds_params.name : var.custom_parameter_group_name
+  multi_az                   = true
   publicly_accessible        = var.rds_publicly_accessible
   vpc_security_group_ids     = [aws_security_group.rds_sg.id]
   apply_immediately          = true
@@ -199,14 +198,12 @@ resource "aws_db_instance" "rds_master_multi_az" {
   copy_tags_to_snapshot      = var.copy_tags_to_snapshot
   #snapshot_identifier        = var.snapshot_identifier
   allow_major_version_upgrade = true
+  deletion_protection        = var.deletion_protection
 
   # Build a read replica from another RDS
   replicate_source_db = var.rds_master_id
 
-  lifecycle {
-    create_before_destroy = true
-    prevent_destroy       = true
-  }
+
 
   tags = local.aws_db_instance_tags
 }

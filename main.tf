@@ -51,7 +51,7 @@ locals {
 # Subnet Groups
 #--------------------
 resource "aws_db_subnet_group" "rds_private_subnet" {
-  # count       = var.private_subnet_ids == "" ? 0 : 1
+  count       = var.private_subnet_ids == "" ? 0 : 1
   name        = "${var.rds_instance_name}-private-subnet"
   description = "${var.rds_instance_name} RDS Private Subnet"
   subnet_ids  = split(",", var.private_subnet_ids)
@@ -80,7 +80,6 @@ resource "aws_db_subnet_group" "rds_public_subnet" {
 # Params group
 #--------------------
 resource "aws_db_parameter_group" "rds_params" {
-  count  = var.custom_parameter_group_name == null ? 1 : 0
   name   = "${var.rds_instance_name}-params"
   family = var.rds_engine_version
 

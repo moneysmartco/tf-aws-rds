@@ -158,7 +158,7 @@ resource "aws_db_instance" "rds_master" {
   copy_tags_to_snapshot      = var.copy_tags_to_snapshot
   #snapshot_identifier        = var.snapshot_identifier
   deletion_protection        = var.deletion_protection
-  allow_major_version_upgrade = true
+  allow_major_version_upgrade = var.rds_allow_major_version_upgrade
 
   # Build a read replica from another RDS
   replicate_source_db = var.rds_master_id
@@ -197,7 +197,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   monitoring_role_arn        = var.rds_monitoring_role_arn
   copy_tags_to_snapshot      = var.copy_tags_to_snapshot
   #snapshot_identifier        = var.snapshot_identifier
-  allow_major_version_upgrade = true
+  allow_major_version_upgrade = var.rds_allow_major_version_upgrade
   deletion_protection        = var.deletion_protection
 
   # Build a read replica from another RDS

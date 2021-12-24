@@ -79,6 +79,10 @@ variable "rds_backup_retention_period" {
   default = 30
 }
 
+variable "rds_allow_major_version_upgrade" {
+  default = true
+}
+
 variable "rds_publicly_accessible" {
   default = false
 }

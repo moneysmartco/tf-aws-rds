@@ -139,7 +139,7 @@ resource "aws_db_instance" "rds_master" {
   engine_version             = var.rds_storage_engine_version
   instance_class             = var.rds_instance_type
   identifier                 = var.rds_instance_name
-  db_name                       = var.rds_instance_db_name
+  name                       = var.rds_instance_db_name
   username                   = var.rds_instance_root_user_name
   password                   = var.rds_instance_root_user_password
   db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""

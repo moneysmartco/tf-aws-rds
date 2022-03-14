@@ -161,7 +161,7 @@ resource "aws_db_instance" "rds_master" {
   allow_major_version_upgrade = var.rds_allow_major_version_upgrade
 
   # Build a read replica from another RDS
-  replicate_source_db = var.rds_master_id
+  # replicate_source_db = var.rds_master_id
 
   lifecycle {
     create_before_destroy = true
@@ -201,7 +201,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   deletion_protection        = var.deletion_protection
 
   # Build a read replica from another RDS
-  replicate_source_db = var.rds_master_id
+  # replicate_source_db = var.rds_master_id
 
 
 

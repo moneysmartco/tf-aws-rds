@@ -139,7 +139,7 @@ resource "aws_db_instance" "rds_master" {
   engine_version             = var.rds_storage_engine_version
   instance_class             = var.rds_instance_type
   identifier                 = var.rds_instance_name
-  name                       = var.rds_instance_db_name
+  db_name                    = var.rds_instance_db_name
   username                   = var.rds_instance_root_user_name
   password                   = var.rds_instance_root_user_password
   db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""
@@ -161,7 +161,7 @@ resource "aws_db_instance" "rds_master" {
   allow_major_version_upgrade = var.rds_allow_major_version_upgrade
 
   # Build a read replica from another RDS
-  replicate_source_db = var.rds_master_id
+  # replicate_source_db = var.rds_master_id
 
   lifecycle {
     create_before_destroy = true
@@ -180,7 +180,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   engine_version             = var.rds_storage_engine_version
   instance_class             = var.rds_instance_type
   identifier                 = var.rds_instance_name
-  name                       = var.rds_instance_db_name
+  db_name                    = var.rds_instance_db_name
   username                   = var.rds_instance_root_user_name
   password                   = var.rds_instance_root_user_password
   db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""
@@ -201,7 +201,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   deletion_protection        = var.deletion_protection
 
   # Build a read replica from another RDS
-  replicate_source_db = var.rds_master_id
+  # replicate_source_db = var.rds_master_id
 
 
 

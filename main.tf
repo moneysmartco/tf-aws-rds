@@ -159,6 +159,8 @@ resource "aws_db_instance" "rds_master" {
   #snapshot_identifier        = var.snapshot_identifier
   deletion_protection        = var.deletion_protection
   allow_major_version_upgrade = var.rds_allow_major_version_upgrade
+  performance_insights_enabled          = var.rds_performance_insights_enabled
+  performance_insights_retention_period = var.rds_performance_insights_retention_period
 
   # Build a read replica from another RDS
   # replicate_source_db = var.rds_master_id
@@ -199,6 +201,8 @@ resource "aws_db_instance" "rds_master_multi_az" {
   #snapshot_identifier        = var.snapshot_identifier
   allow_major_version_upgrade = var.rds_allow_major_version_upgrade
   deletion_protection        = var.deletion_protection
+  performance_insights_enabled          = var.rds_performance_insights_enabled
+  performance_insights_retention_period = var.rds_performance_insights_retention_period
 
   # Build a read replica from another RDS
   # replicate_source_db = var.rds_master_id

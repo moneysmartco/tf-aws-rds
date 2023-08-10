@@ -130,6 +130,14 @@ variable "custom_parameter_group_name" {
   
 }
 
+variable "rds_performance_insights_enabled" {
+  default    = false
+}
+
+variable "rds_performance_insights_retention_period" {
+  default = 7
+}
+
 variable "tags" {
   description = "Tagging resources with default values"
   default = {

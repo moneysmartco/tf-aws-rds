@@ -158,6 +158,7 @@ resource "aws_db_instance" "rds_master" {
   copy_tags_to_snapshot      = var.copy_tags_to_snapshot
   #snapshot_identifier        = var.snapshot_identifier
   deletion_protection        = var.deletion_protection
+  ca_cert_identifier         = var.ca_cert_identifier
   allow_major_version_upgrade = var.rds_allow_major_version_upgrade
   performance_insights_enabled          = var.rds_performance_insights_enabled
   performance_insights_retention_period = var.rds_performance_insights_retention_period
@@ -201,6 +202,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
   #snapshot_identifier        = var.snapshot_identifier
   allow_major_version_upgrade = var.rds_allow_major_version_upgrade
   deletion_protection        = var.deletion_protection
+  ca_cert_identifier         = var.ca_cert_identifier
   performance_insights_enabled          = var.rds_performance_insights_enabled
   performance_insights_retention_period = var.rds_performance_insights_retention_period
 

@@ -27,6 +27,10 @@ variable "deletion_protection" {
   default = "true"
 }
 
+variable "rds_ca_cert_identifier" {
+  default = "rds-ca-2019"
+}
+
 variable "rds_engine_version" {
   default = "mysql5.6"
 }

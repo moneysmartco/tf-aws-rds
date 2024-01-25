@@ -27,7 +27,7 @@ variable "deletion_protection" {
   default = "true"
 }
 
-variable "ca_cert_identifier" {
+variable "rds_ca_cert_identifier" {
   default = "rds-ca-2019"
 }
 

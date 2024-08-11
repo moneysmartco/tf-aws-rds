@@ -158,3 +158,18 @@ variable "tags" {
   }
 }
 
+#-----------------
+# Read Replica
+#-----------------
+
+variable "create_read_replica" {
+  default = false
+}
+
+variable "rds_master_id" {
+  default = null
+}
+
+variable "rds_read_replica_instance_type" {
+  default = "db.t4g.micro"
+}

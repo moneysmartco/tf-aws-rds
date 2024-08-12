@@ -216,7 +216,7 @@ resource "aws_db_instance" "rds_master_multi_az" {
 
 resource "aws_db_instance" "rds_read_replica" {
   count                      = var.create_read_replica ? 1 : 0
-  replicate_source_db        = var.rds_master_id
+  replicate_source_db        = var.rds_source_db
   instance_class             = var.rds_read_replica_instance_type
   identifier                 = "${var.rds_instance_name}-read-replica"
   publicly_accessible        = var.rds_publicly_accessible

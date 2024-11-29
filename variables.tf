@@ -79,6 +79,10 @@ variable "rds_multi_az" {
   default = false
 }
 
+variable "create_rds" {
+  default = false
+}
+
 variable "rds_backup_retention_period" {
   default = 30
 }

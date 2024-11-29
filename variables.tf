@@ -79,7 +79,7 @@ variable "rds_multi_az" {
   default = false
 }
 
-variable "create_rds" {
+variable "rds_create" {
   default = false
 }
 

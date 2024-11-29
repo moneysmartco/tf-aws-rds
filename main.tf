@@ -130,7 +130,7 @@ resource "aws_security_group_rule" "allow_connect_from_app" {
 # Master Node
 #-------------------------
 resource "aws_db_instance" "rds_master" {
-  count                      = var.create_rds && !var.rds_multi_az ? 1 : 0
+  count                      = var.rds_create && !var.rds_multi_az ? 1 : 0
   storage_type               = var.rds_storage_type
   allocated_storage          = var.rds_storage_size
   max_allocated_storage      = var.rds_max_storage_size
@@ -174,7 +174,7 @@ resource "aws_db_instance" "rds_master" {
 }
 
 resource "aws_db_instance" "rds_master_multi_az" {
-  count                      = var.create_rds && var.rds_multi_az ? 1 : 0
+  count                      = var.rds_create && var.rds_multi_az ? 1 : 0
   storage_type               = var.rds_storage_type
   allocated_storage          = var.rds_storage_size
   max_allocated_storage      = var.rds_max_storage_size

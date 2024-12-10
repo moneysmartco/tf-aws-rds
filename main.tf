@@ -214,3 +214,36 @@ resource "aws_db_instance" "rds_master_multi_az" {
   tags = local.aws_db_instance_tags
 }
 
+resource "aws_db_instance" "rds_read_replica" {
+  count                      = var.create_read_replica ? 1 : 0
+  replicate_source_db        = var.rds_source_db
+  instance_class             = var.rds_read_replica_instance_type
+  identifier                 = "${var.rds_instance_name}-read-replica"
+  publicly_accessible        = var.rds_publicly_accessible
+  vpc_security_group_ids     = [aws_security_group.rds_sg.id]
+  auto_minor_version_upgrade = true
+  apply_immediately          = true
+  skip_final_snapshot        = var.rds_skip_final_snapshot
+  copy_tags_to_snapshot      = var.copy_tags_to_snapshot
+  deletion_protection        = var.deletion_protection
+  storage_type               = var.rds_storage_type
+  allocated_storage          = var.rds_storage_size
+  max_allocated_storage      = var.rds_max_storage_size
+  storage_encrypted          = var.rds_storage_encrypted
+  availability_zone          = element(split(",", var.azs), 0)
+  db_subnet_group_name       = var.rds_master_id == "" ? aws_db_subnet_group.rds_private_subnet[0].name : ""
+  ca_cert_identifier         = var.rds_ca_cert_identifier
+  performance_insights_enabled          = var.rds_performance_insights_enabled
+  performance_insights_retention_period = var.rds_performance_insights_retention_period
+  monitoring_interval        = var.rds_monitoring_interval
+  monitoring_role_arn        = var.rds_monitoring_role_arn
+
+  engine                     = var.rds_engine_name
+  engine_version             = var.rds_storage_engine_version
+  parameter_group_name       = var.custom_parameter_group_name == null ? aws_db_parameter_group.rds_params.name : var.custom_parameter_group_name
+  multi_az                   = false
+  backup_retention_period    = var.rds_master_id == "" ? var.rds_backup_retention_period : 0
+  final_snapshot_identifier  = "${var.rds_instance_name}-final-snapshot"
+  #snapshot_identifier        = var.snapshot_identifier
+  allow_major_version_upgrade = var.rds_allow_major_version_upgrade
+}
